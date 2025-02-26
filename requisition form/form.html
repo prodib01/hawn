@@ -3,793 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Requisition Form</title>
-    
+    <title>Hawn School Requisition Form</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #7209b7;
-            --accent: #f72585;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4cc9f0;
-            --danger: #e63946;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f6f8fc, #e9ecef);
-            min-height: 100vh;
-            padding: 2rem 0;
-        }
-        
-        .form-container {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 2.5rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,.075)' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.6;
-        }
-        
-        .school-logo {
-            width: 70px;
-            height: 70px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--primary);
-            margin: 0 auto 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-        
-        .header h2 {
-            font-weight: 700;
-            margin: 0;
-            font-size: 2rem;
-            color: white;
-            position: relative;
-        }
-        
-        .header h3 {
-            font-weight: 400;
-            margin: 0.5rem 0 0;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.25rem;
-            position: relative;
-        }
-        
-        .form-section {
-            padding: 2rem;
-        }
-        
-        .info-card {
-            background-color: rgba(67, 97, 238, 0.05);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 2rem;
-        }
-        
-        .form-label {
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .form-control, .form-select {
-            border: 1px solid #ced4da;
-            padding: 0.6rem 0.75rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .table {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .table thead {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-        
-        .table thead th {
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            padding: 1rem 0.75rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .table-striped>tbody>tr:nth-of-type(odd)>* {
-            background-color: rgba(67, 97, 238, 0.03);
-        }
-        
-        .btn {
-            padding: 0.6rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        .btn-success {
-            background-color: var(--success);
-            border-color: var(--success);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-            border-color: var(--danger);
-        }
-        
-        .btn-icon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .signature-box {
-            margin-top: 3rem;
-            border-top: 1px dashed #dee2e6;
-            padding-top: 2rem;
-        }
-        
-        .signature-container {
-            border: 1px solid #dee2e6;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-        
-        .signature-line {
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-actions {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .form-container {
-                box-shadow: none;
-                border-radius: 0;
-            }
-            
-            .footer-actions, 
-            .btn-remove, 
-            .add-item-btn {
-                display: none !important;
-            }
-            
-            /* Better print layout */
-            .container {
-                width: 100%;
-                max-width: 100%;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .header {
-                padding: 1.5rem;
-            }
-            
-            .form-section {
-                padding: 1rem;
-            }
-            
-            .table {
-                box-shadow: none;
-            }
-            
-            /* Ensure page breaks don't cut through items */
-            tr {
-                page-break-inside: avoid;
-            }
-            
-            .signature-box {
-                page-break-inside: avoid;
-            }
-            
-            /* Fix total amount positioning for print */
-            .total-row td:last-child {
-                text-align: right !important;
-                width: 200px !important;
-            }
-            
-            /* Ensure the total row appears at the extreme end */
-            .total-row {
-                position: relative;
-            }
-            
-            .total-row td:first-child {
-                text-align: right;
-            }
-        }
-        
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animate-fade-in-up {
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
-        
-        .badge-req {
-            background-color: var(--accent);
-            color: white;
-            border-radius: 2rem;
-            font-size: 0.75rem;
-            padding: 0.35rem 0.65rem;
-        }
-        
-        .total-row {
-            background-color: rgba(67, 97, 238, 0.1) !important;
-            font-weight: 600;
-        }
-        
-        /* Fixed badge styling */
-        .badge-img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            margin: 0 auto;
-            display: block;
-        }
-        
-        /* Fix total amount alignment */
-        .total-row td:last-child {
-            text-align: right;
-            width: 200px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="form.css">
+
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
-                <div class="form-container animate-fade-in-up">
-                    <div class="header text-center">
-                        <div class="school-logo">
-                            <!-- Fixed badge implementation -->
-                            <img src="badge.png" alt="School Badge" class="badge-img">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="form-container animate-fade-in-up">
+                <div class="header">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="shape shape-4"></div>
+                    </div>
+                    <div class="school-logo">
+                        <img src="badge.png" alt="School Badge" class="badge-img">
+                    </div>
+                    <h2>HAWN KINDERGARTEN AND JUNIOR SCHOOL</h2>
+                    <h3>Requisition Form</h3>
+                    <div class="status-badge" id="formStatus">NEW REQUEST</div>
+                </div>
+
+                <div class="form-section">
+                    <form id="requisitionForm">
+                        <div class="info-card mb-4">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="currentDate" class="form-label">Date <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                                        <input type="date" class="form-control" id="currentDate" name="date" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="reqNo" class="form-label">Requisition No</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                                        <input type="text" class="form-control bg-light" id="reqNo" readonly name="requisitionNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="requestedBy" class="form-label">Requested By <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input type="text" class="form-control" id="requestedBy" name="requestedBy" required placeholder="Your full name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-4">
+                                    <label for="department" class="form-label">Department</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                        <select class="form-select" id="department" name="department">
+                                            <option value="">Select Department</option>
+                                            <option value="Administration">Administration</option>
+                                            <option value="Academic">Academic</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="Maintenance">Maintenance</option>
+                                            <option value="ICT">ICT</option>
+                                            <option value="Sports">Sports</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="priority" class="form-label">Priority</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-flag"></i></span>
+                                        <select class="form-select" id="priority" name="priority">
+                                            <option value="Normal">Normal</option>
+                                            <option value="Urgent">Urgent</option>
+                                            <option value="Critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="expectedDate" class="form-label">Expected By</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                                        <input type="date" class="form-control" id="expectedDate" name="expectedDate">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h2>HAWN KINDERGARTEN AND JUNIOR SCHOOL</h2>
-                        <h3>Requisition Form</h3>
-                    </div>
-                    
-                    <div class="form-section">
-                        <form id="requisitionForm">
-                            <div class="info-card mb-4">
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label for="currentDate" class="form-label">Date</label>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="requisitionTable">
+                                <thead>
+                                <tr>
+                                    <th style="width: 60px;">#</th>
+                                    <th>Item Description</th>
+                                    <th style="width: 100px;">Unit</th>
+                                    <th style="width: 100px;">Quantity</th>
+                                    <th style="width: 200px;">Unit Price</th>
+                                    <th style="width: 200px;">Total Amount</th>
+                                    <th style="width: 50px;" class="add-item-btn"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="requisitionBody">
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="item-number mx-auto">1</div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="items[0].description" placeholder="Enter item description" required>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="items[0].unit" placeholder="Unit">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control quantity" min="0" onchange="calculateRow(this)" name="items[0].quantity" placeholder="0" required>
+                                    </td>
+                                    <td>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                            <input type="date" class="form-control" id="currentDate" name="date">
+                                            <input type="number" class="form-control price" min="0" step="1" onchange="calculateRow(this)" name="items[0].price" placeholder="0" required>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control total" readonly name="items[0].total" placeholder="0">
+                                        </div>
+                                    </td>
+                                    <td class="text-center add-item-btn">
+                                        <button type="button" class="btn btn-sm btn-outline-danger btn-remove" onclick="removeRow(this)" title="Remove Item">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr class="total-row">
+                                    <td colspan="5" class="text-end fw-bold">Total Amount:</td>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-text">UGX</span>
+                                            <input type="number" id="grandTotal" class="form-control fw-bold" readonly name="grandTotal" value="0">
+                                        </div>
+                                    </td>
+                                    <td class="add-item-btn"></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-start mt-3 mb-4 add-item-btn">
+                            <button type="button" class="btn btn-success btn-icon" onclick="addRow()">
+                                <i class="bi bi-plus-circle"></i> Add Item
+                            </button>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <label for="purpose" class="form-label">Purpose/Justification</label>
+                                <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Explain the purpose or justification for this requisition"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="signature-box">
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="signature-container">
+                                        <p class="mb-3 text-muted"><i class="bi bi-person-check"></i> Requested by: <span id="requestedByName" class="fw-bold"></span></p>
+                                        <div class="signature-line"></div>
+                                        <small class="text-muted">Signature &amp; Date</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="reqNo" class="form-label">Requisition No</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-hash"></i></span>
-                                            <input type="text" class="form-control bg-light" id="reqNo" readonly name="requisitionNo">
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="signature-container">
+                                        <p class="mb-3 text-muted"><i class="bi bi-check2-circle"></i> Reviewed by: <span id="reviewedByName" class="fw-bold"></span></p>
+                                        <div class="signature-line"></div>
+                                        <small class="text-muted">Signature &amp; Date</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="requestedBy" class="form-label">Requested By</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                            <input type="text" class="form-control" id="requestedBy" name="requestedBy">
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="signature-container">
+                                        <p class="mb-3 text-muted"><i class="bi bi-check2-all"></i> Approved by: <span id="approvedByName" class="fw-bold"></span></p>
+                                        <div class="signature-line"></div>
+                                        <small class="text-muted">Signature &amp; Date</small>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered" id="requisitionTable">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 60px;">#</th>
-                                            <th>Item Description</th>
-                                            <th style="width: 100px;">Unit</th>
-                                            <th style="width: 100px;">Quantity</th>
-                                            <th style="width: 200px;">Unit Price</th>
-                                            <th style="width: 200px;">Total Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="requisitionBody">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>
-                                                <input type="text" class="form-control" name="items[0].description" placeholder="Enter item description">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="items[0].unit" placeholder="Unit">
-                                            </td>
-                                            <td>
-                                                <input type="number" class="form-control quantity" min="0" onchange="calculateRow(this)" name="items[0].quantity" placeholder="0">
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">UGX</span>
-                                                    <input type="number" class="form-control price" min="0" step="1" onchange="calculateRow(this)" name="items[0].price" placeholder="0">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">UGX</span>
-                                                    <input type="number" class="form-control total" readonly name="items[0].total" placeholder="0">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr class="total-row">
-                                            <td colspan="5" class="text-end fw-bold">Total Amount:</td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">UGX</span>
-                                                    <input type="number" id="grandTotal" class="form-control" readonly name="grandTotal" value="0">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            
-                            <div class="d-flex justify-content-start mt-3 mb-4 add-item-btn">
-                                <button type="button" class="btn btn-success btn-icon" onclick="addRow()">
-                                    <i class="bi bi-plus-circle"></i> Add Item
-                                </button>
-                                <button type="button" class="btn btn-danger btn-icon ms-2" onclick="removeLastRow()">
-                                    <i class="bi bi-dash-circle"></i> Remove Item
-                                </button>
-                            </div>
-                            
-                            <div class="signature-box">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="signature-container">
-                                            <p class="mb-3 text-muted"><i class="bi bi-person-check"></i> Requested by: <span id="requestedByName" class="fw-bold"></span></p>
-                                            <div class="signature-line"></div>
-                                            <small class="text-muted">Signature &amp; Date</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="signature-container">
-                                            <p class="mb-3 text-muted"><i class="bi bi-check2-circle"></i> Approved by: <span id="approvedByName" class="fw-bold"></span></p>
-                                            <div class="signature-line"></div>
-                                            <small class="text-muted">Signature &amp; Date</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="footer-actions">
-                                <button type="button" class="btn btn-primary btn-icon" onclick="printForm()">
-                                    <i class="bi bi-printer"></i> Print Form
-                                </button>
-                                <button type="button" class="btn btn-primary btn-icon" onclick="downloadPDF()">
-                                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
-                                </button>
-                                <button type="button" class="btn btn-secondary btn-icon" onclick="resetForm()">
-                                    <i class="bi bi-arrow-counterclockwise"></i> Reset Form
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+
+                        <div class="footer-actions">
+                            <button type="button" class="btn btn-primary btn-icon" onclick="printForm()">
+                                <i class="bi bi-printer"></i> Print Form
+                            </button>
+                            <button type="button" class="btn btn-primary btn-icon" onclick="downloadPDF()">
+                                <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-icon" onclick="resetForm()">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset Form
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                
-                <div class="text-center mt-4 mb-5">
-                    <small class="text-muted">© 2025 Hawn Kindergarten and Junior School. All rights reserved.</small>
-                </div>
+            </div>
+
+            <div class="text-center mt-4 mb-5">
+                <small class="text-muted">© 2025 Hawn Kindergarten and Junior School. All rights reserved.</small>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Required libraries for functionality -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        // Set current date
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('currentDate').valueAsDate = new Date();
-            
-            // Generate requisition number
-            const today = new Date();
-            const reqNo = today.getFullYear().toString() +
-                         (today.getMonth() + 1).toString().padStart(2, '0') +
-                         today.getDate().toString().padStart(2, '0') +
-                         '-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            document.getElementById('reqNo').value = reqNo;
-            
-            // Add event listener for the requestedBy field
-            document.getElementById('requestedBy').addEventListener('input', updateSignatureNames);
-            
-            // Initialize an event listener for the approvedBy field if it exists
-            const approvedByField = document.getElementById('approvedBy');
-            if (approvedByField) {
-                approvedByField.addEventListener('input', updateSignatureNames);
-            }
-        });
-        
-        // Update the signature names based on form input
-        function updateSignatureNames() {
-            const requestedByValue = document.getElementById('requestedBy').value;
-            document.getElementById('requestedByName').textContent = requestedByValue;
-            
-            const approvedByField = document.getElementById('approvedBy');
-            const approvedByNameField = document.getElementById('approvedByName');
-            
-            if (approvedByField && approvedByNameField) {
-                approvedByNameField.textContent = approvedByField.value;
-            }
-        }
-        
-        // Add new row
-        function addRow() {
-            const tbody = document.getElementById('requisitionBody');
-            const rowCount = tbody.children.length;
-            
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${rowCount + 1}</td>
-                <td>
-                    <input type="text" class="form-control" name="items[${rowCount}].description" placeholder="Enter item description">
-                </td>
-                <td>
-                    <input type="text" class="form-control" name="items[${rowCount}].unit" placeholder="Unit">
-                </td>
-                <td>
-                    <input type="number" class="form-control quantity" min="0" onchange="calculateRow(this)" name="items[${rowCount}].quantity" placeholder="0">
-                </td>
-                <td>
-                    <div class="input-group">
-                        <span class="input-group-text">UGX</span>
-                        <input type="number" class="form-control price" min="0" step="1" onchange="calculateRow(this)" name="items[${rowCount}].price" placeholder="0">
-                    </div>
-                </td>
-                <td>
-                    <div class="input-group">
-                        <span class="input-group-text">UGX</span>
-                        <input type="number" class="form-control total" readonly name="items[${rowCount}].total" placeholder="0">
-                    </div>
-                </td>
-            `;
-            
-            tbody.appendChild(newRow);
-            
-            // Add animation class then remove it after animation completes
-            newRow.classList.add('animate-fade-in-up');
-            setTimeout(() => {
-                newRow.classList.remove('animate-fade-in-up');
-            }, 500);
-            
-            renumberRows();
-        }
-        
-        // Remove last row
-        function removeLastRow() {
-            const tbody = document.getElementById('requisitionBody');
-            if (tbody.children.length > 1) {
-                tbody.removeChild(tbody.lastChild);
-                calculateGrandTotal();
-                renumberRows();
-            }
-        }
-        
-        // Renumber rows
-        function renumberRows() {
-            const rows = document.getElementById('requisitionBody').children;
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].children[0].textContent = i + 1;
-                const inputs = rows[i].querySelectorAll('input');
-                inputs.forEach(input => {
-                    if (input.name) {
-                        input.name = input.name.replace(/\[\d+\]/, `[${i}]`);
-                    }
-                });
-            }
-        }
-        
-        // Calculate row total
-        function calculateRow(input) {
-            const row = input.closest('tr');
-            const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
-            const price = parseFloat(row.querySelector('.price').value) || 0;
-            const total = quantity * price;
-            row.querySelector('.total').value = Math.round(total); // Rounded to whole number for UGX
-            
-            calculateGrandTotal();
-        }
-        
-        // Calculate grand total
-        function calculateGrandTotal() {
-            const totals = Array.from(document.getElementsByClassName('total'));
-            const grandTotal = totals.reduce((sum, input) => sum + (parseFloat(input.value) || 0), 0);
-            document.getElementById('grandTotal').value = Math.round(grandTotal); // Rounded to whole number for UGX
-        }
-        
-        // Print form with improved function
-        function printForm() {
-            // Update signature names
-            updateSignatureNames();
-            
-            // Prepare for printing
-            window.print();
-        }
-        
-        // Reset form
-        function resetForm() {
-            // Ask for confirmation before resetting
-            if (confirm("Are you sure you want to reset the form? All entered data will be lost.")) {
-                document.getElementById('requisitionForm').reset();
-                document.getElementById('currentDate').valueAsDate = new Date();
-                
-                // Generate new requisition number
-                const today = new Date();
-                const reqNo = today.getFullYear().toString() +
-                             (today.getMonth() + 1).toString().padStart(2, '0') +
-                             today.getDate().toString().padStart(2, '0') +
-                             '-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-                document.getElementById('reqNo').value = reqNo;
-                
-                // Clear all rows except the first one
-                const tbody = document.getElementById('requisitionBody');
-                while (tbody.children.length > 1) {
-                    tbody.removeChild(tbody.lastChild);
-                }
-                
-                // Reset the first row values
-                const firstRow = tbody.firstChild;
-                const inputs = firstRow.querySelectorAll('input');
-                inputs.forEach(input => {
-                    input.value = '';
-                });
-                
-                // Reset grand total
-                document.getElementById('grandTotal').value = '0';
-                
-                // Reset signature names
-                document.getElementById('requestedByName').textContent = '';
-                const approvedByNameField = document.getElementById('approvedByName');
-                if (approvedByNameField) {
-                    approvedByNameField.textContent = '';
-                }
-            }
-        }
-        
-        // Download PDF - improved function
-        function downloadPDF() {
-    // Get form data
-    const date = document.getElementById('currentDate').value;
-    const reqNo = document.getElementById('reqNo').value;
-    const requestedBy = document.getElementById('requestedBy').value;
-    
-    try {
-        // Create PDF document
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        // Set font sizes
-        const titleFontSize = 16;
-        const headerFontSize = 12;
-        const normalFontSize = 10;
-        const smallFontSize = 8;
-        
-        // Add title
-        doc.setFontSize(titleFontSize);
-        doc.setFont(undefined, 'bold');
-        doc.text("HAWN KINDERGARTEN AND JUNIOR SCHOOL", 105, 20, { align: 'center' });
-        
-        doc.setFontSize(headerFontSize);
-        doc.text("REQUISITION FORM", 105, 30, { align: 'center' });
-        
-        // Add form details
-        doc.setFontSize(normalFontSize);
-        doc.setFont(undefined, 'normal');
-        
-        doc.text(`Date: ${date}`, 20, 45);
-        doc.text(`Requisition No: ${reqNo}`, 120, 45);
-        doc.text(`Requested By: ${requestedBy}`, 20, 55);
-        
-        // Draw table headers
-        const startY = 70;
-        const cellPadding = 5;
-        const colWidths = [10, 70, 20, 25, 30, 30];
-        let currentY = startY;
-        
-        // Draw header row
-        doc.setFillColor(67, 97, 238); // Primary color
-        doc.setTextColor(255, 255, 255);
-        doc.setFont(undefined, 'bold');
-        
-        doc.rect(15, currentY, colWidths[0], 10, 'F');
-        doc.rect(15 + colWidths[0], currentY, colWidths[1], 10, 'F');
-        doc.rect(15 + colWidths[0] + colWidths[1], currentY, colWidths[2], 10, 'F');
-        doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2], currentY, colWidths[3], 10, 'F');
-        doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3], currentY, colWidths[4], 10, 'F');
-        doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4], currentY, colWidths[5], 10, 'F');
-        
-        doc.text('#', 15 + colWidths[0]/2, currentY + 7, { align: 'center' });
-        doc.text('Item Description', 15 + colWidths[0] + colWidths[1]/2, currentY + 7, { align: 'center' });
-        doc.text('Unit', 15 + colWidths[0] + colWidths[1] + colWidths[2]/2, currentY + 7, { align: 'center' });
-        doc.text('Quantity', 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3]/2, currentY + 7, { align: 'center' });
-        doc.text('Unit Price (UGX)', 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4]/2, currentY + 7, { align: 'center' });
-        doc.text('Total (UGX)', 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5]/2, currentY + 7, { align: 'center' });
-        
-        currentY += 10;
-        
-        // Get items data
-        const rows = document.getElementById('requisitionBody').children;
-        let grandTotal = 0;
-        
-        // Reset text color to black for items
-        doc.setTextColor(0, 0, 0);
-        doc.setFont(undefined, 'normal');
-        
-        // Draw item rows
-        for (let i = 0; i < rows.length; i++) {
-            const description = rows[i].querySelector('input[name^="items"][name$=".description"]').value;
-            const unit = rows[i].querySelector('input[name^="items"][name$=".unit"]').value;
-            const quantity = rows[i].querySelector('input[name^="items"][name$=".quantity"]').value;
-            const price = rows[i].querySelector('input[name^="items"][name$=".price"]').value;
-            const total = rows[i].querySelector('input[name^="items"][name$=".total"]').value;
-            
-            // Add a new page if we're near the bottom
-            if (currentY > 270) {
-                doc.addPage();
-                currentY = 20;
-            }
-            
-            // Alternate row background
-            if (i % 2 === 0) {
-                doc.setFillColor(240, 240, 255);
-                doc.rect(15, currentY, colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5], 10, 'F');
-            }
-            
-            // Draw row borders
-            doc.setDrawColor(200, 200, 200);
-            doc.rect(15, currentY, colWidths[0], 10);
-            doc.rect(15 + colWidths[0], currentY, colWidths[1], 10);
-            doc.rect(15 + colWidths[0] + colWidths[1], currentY, colWidths[2], 10);
-            doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2], currentY, colWidths[3], 10);
-            doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3], currentY, colWidths[4], 10);
-            doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4], currentY, colWidths[5], 10);
-            
-            // Add text
-            doc.text((i+1).toString(), 15 + colWidths[0]/2, currentY + 7, { align: 'center' });
-            
-            // Handle long description text with wrapping
-            const descLines = doc.splitTextToSize(description, colWidths[1] - cellPadding*2);
-            doc.text(descLines, 15 + colWidths[0] + cellPadding, currentY + 7);
-            
-            doc.text(unit, 15 + colWidths[0] + colWidths[1] + colWidths[2]/2, currentY + 7, { align: 'center' });
-            doc.text(quantity, 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3]/2, currentY + 7, { align: 'center' });
-            doc.text(price, 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4]/2, currentY + 7, { align: 'center' });
-            doc.text(total, 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5]/2, currentY + 7, { align: 'center' });
-            
-            grandTotal += parseFloat(total) || 0;
-            currentY += 10;
-        }
-        
-        // Draw total row
-        doc.setFillColor(230, 230, 250);
-        doc.rect(15, currentY, colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4], 10, 'F');
-        doc.rect(15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4], currentY, colWidths[5], 10, 'F');
-        
-        doc.setFont(undefined, 'bold');
-        doc.text("TOTAL AMOUNT:", 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] - cellPadding, currentY + 7, { align: 'right' });
-        doc.text(grandTotal.toFixed(0).toString(), 15 + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5]/2, currentY + 7, { align: 'center' });
-        
-        currentY += 20;
-        
-        // Add signature section
-        doc.setDrawColor(100, 100, 100);
-        doc.setFont(undefined, 'normal');
-        
-        // Requested by signature
-        doc.text("Requested by:", 40, currentY);
-        doc.text(requestedBy, 40, currentY + 7);
-        doc.line(25, currentY + 15, 80, currentY + 15);
-        doc.setFontSize(smallFontSize);
-        doc.text("Signature & Date", 40, currentY + 20, { align: 'center' });
-        
-        // Approved by signature
-        doc.setFontSize(normalFontSize);
-        doc.text("Approved by:", 140, currentY);
-        doc.line(120, currentY + 15, 175, currentY + 15);
-        doc.setFontSize(smallFontSize);
-        doc.text("Signature & Date", 140, currentY + 20, { align: 'center' });
-        
-        // Footer
-        currentY = 280;
-        doc.setFontSize(8);
-        doc.text("© 2025 Hawn Kindergarten and Junior School. All rights reserved.", 105, currentY, { align: 'center' });
-        
-        // Save the PDF
-        const fileName = reqNo ? `Requisition_${reqNo}.pdf` : 'Requisition_Form.pdf';
-        doc.save(fileName);
-    } catch (error) {
-        console.error("Error generating PDF:", error);
-        alert("Failed to generate PDF: " + error.message);
-    }
-}
-    </script>
+<!-- Required libraries for functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- External JavaScript -->
+<script src="form.js"></script>
 </body>
 </html>
